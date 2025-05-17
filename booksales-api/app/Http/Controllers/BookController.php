@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     public function index(){
-        $books = Book::all();
-        // $books berdasarkan genre
-        $books = Book::with('genre')->get();
-        $books = Book::with('author')->get();
-        return view('books',['books' => $books]);
+        $books = Book::with(['genre', 'author'])->get();
+
+        return response()->json([
+            'success' => true,
+            "message" => "Get All Resource",
+            "data" => $books,
+        ], 200);
     }
 }
+
